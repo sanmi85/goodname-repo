@@ -44,8 +44,8 @@ jobs:
           username: ${{ secrets.USER }}
           key: ${{ secrets.EC2_SSH_KEY }}
           script: |
-           
-            docker pull 654654245415.dkr.ecr.us-east-2.amazonaws.com/goodname-repo:latest
-            docker stop goodname-repo || true
-            docker rm goodname-repo || true
-            docker run -d --name goodname-repo -p 80:80 654654245415.dkr.ecr.us-east-2.amazonaws.com/goodname-repo:latest/goodname-repo:latest
+           aws ecr get-login-password --region us-east-2 | docker login --username AWS --password-stdin 654654245415.dkr.ecr.us-east-2.amazonaws.com/goodname-repo:latest
+           # docker pull 654654245415.dkr.ecr.us-east-2.amazonaws.com/goodname-repo:latest
+           # docker stop goodname-repo || true
+           # docker rm goodname-repo || true
+           # docker run -d --name goodname-repo -p 80:80 654654245415.dkr.ecr.us-east-2.amazonaws.com/goodname-repo:latest/goodname-repo:latest
