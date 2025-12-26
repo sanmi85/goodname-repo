@@ -19,22 +19,16 @@ jobs:
           aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
           aws-region: us-east-2
 
-      - name: Debug identity
-        run: aws sts get-caller-identity
-
-      - name: Ensure ECR repo exists
-        run: |
-          aws ecr describe-repositories --repository-names goodname-repo >/dev/null 2>&1 || \
-          aws ecr create-repository --repository-name goodname-repo
-
       - name: Login to Amazon ECR
         id: login-ecr
-        uses: aws-actions/amazon-ecr-login@v1
+        uses: aws-actions/amazon-ecr-login@v1 
         with:
-          mask-password: "true"
-
-      - name: Build, Tag, and Push to ECR
-        run: |
-          IMAGE_URL=654654245415.dkr.ecr.us-east-2.amazonaws.com/goodname-repo:${GITHUB_RUN_NUMBER}
-          docker build -t $IMAGE_URL .
-          docker push $IMAGE_URL
+          mask-password: 'true'
+        
+          
+      - name: Build, Tag, and Push to ECR 
+        run: | 
+            IMAGE_URL=654654245415.dkr.ecr.us-east-2.amazonaws.com/goodname-repo:$GITHUB_RUN_NUMBER
+            docker build -t $IMAGE_URL .
+            docker push $IMAGE_URL
+            
