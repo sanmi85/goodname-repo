@@ -33,7 +33,7 @@ jobs:
             docker push $IMAGE_URL
 
 
-Deploy-ec2:
+  Deploy-ec2:
     needs: build-and-push
     runs-on: ubuntu-latest
     steps:
