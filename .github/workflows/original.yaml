@@ -31,3 +31,4 @@ jobs:
             IMAGE_URL=654654245415.dkr.ecr.us-east-2.amazonaws.com/goodname-repo:$GITHUB_RUN_NUMBER
             docker build -t $IMAGE_URL .
             docker push $IMAGE_URL
+            
