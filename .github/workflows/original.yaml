@@ -31,4 +31,21 @@ jobs:
             IMAGE_URL=654654245415.dkr.ecr.us-east-2.amazonaws.com/goodname-repo:$GITHUB_RUN_NUMBER
             docker build -t $IMAGE_URL .
             docker push $IMAGE_URL
-            
+
+
+Deploy-ec2:
+    needs: build-and-push
+    runs-on: ubuntu-latest
+    steps:
+      - name: Deploy to EC2 instance
+        uses: appleboy/ssh-action@v0.1.6
+        with:
+          host: ${{ secrets.HOST_IP }}
+          username: ${{ secrets.USER }}
+          key: ${{ secrets.EC2_SSH_KEY }}
+          script: |
+            aws ecr get-login-password --region us-east-2 | docker login --username AWS --password-stdin 654654245415.dkr.ecr.us-east-2.amazonaws.com/goodname-repo:6
+            docker pull 696035274327.dkr.ecr.us-east-2.amazonaws.com/ecommerce-app:6
+            docker stop ecommerce-app || true
+            docker rm ecommerce-app || true
+            docker run -d --name ecommerce-app -p 80:80 654654245415.dkr.ecr.us-east-2.amazonaws.com/goodname-repo:6/ecommerce-app:6
