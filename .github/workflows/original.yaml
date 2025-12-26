@@ -44,8 +44,8 @@ jobs:
           username: ${{ secrets.USER }}
           key: ${{ secrets.EC2_SSH_KEY }}
           script: |
-            aws ecr get-login-password --region us-east-2 | docker login --username AWS --password-stdin 654654245415.dkr.ecr.us-east-2.amazonaws.com/goodname-repo:8
-            docker pull 654654245415.dkr.ecr.us-east-2.amazonaws.com/ecommerce-app:8
+            aws ecr get-login-password --region us-east-2 | docker login --username AWS --password-stdin 654654245415.dkr.ecr.us-east-2.amazonaws.com/goodname-repo:latest
+            docker pull 654654245415.dkr.ecr.us-east-2.amazonaws.com/ecommerce-app:latest
             docker stop ecommerce-app || true
             docker rm ecommerce-app || true
-            docker run -d --name ecommerce-app -p 80:80 654654245415.dkr.ecr.us-east-2.amazonaws.com/goodname-repo:8/ecommerce-app:8
+            docker run -d --name ecommerce-app -p 80:80 654654245415.dkr.ecr.us-east-2.amazonaws.com/goodname-repo:8/ecommerce-app:latest
